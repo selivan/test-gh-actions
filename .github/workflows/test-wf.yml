@@ -3,7 +3,7 @@ name: Python package
 on: [push]
 
 jobs:
-  upload:
+  build_and_upload:
     runs-on: ubuntu-latest
     strategy:
       matrix:
