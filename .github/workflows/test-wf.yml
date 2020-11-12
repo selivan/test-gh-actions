@@ -18,17 +18,20 @@ jobs:
         with:
           fileOutput: '\n'
           output: 'json'
-      - name: test
+      - name: test file changes
         run: |
-          cat $HOME/files_modified.txt
-          echo '${{ steps.file_changes.outputs.files_modified}}'
+          echo '${{ steps.file_changes.outputs.files_modified }}'
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
       - name: Create a source package
+        if:
+          contains(steps.file_changes.outputs.files_modified, 'VERSION')
         run: |
           python setup.py sdist
-      - name: Publish a Python distribution to PyPI
+      - name: Publish a source package to PyPI
+        if:
+          contains(steps.file_changes.outputs.files_modified, 'VERSION')
         uses: pypa/gh-action-pypi-publish@master
         with:
           user: __token__
