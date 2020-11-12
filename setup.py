@@ -8,6 +8,6 @@ setup(
     license='WTFPL',
     python_requires='>=3.5',
     install_requires=[],
-    data_files=[('',['VERSION'])],
+    data_files=[('', ['VERSION'])],
     scripts=[],
 )
