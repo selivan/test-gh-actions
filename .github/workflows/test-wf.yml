@@ -12,16 +12,19 @@ jobs:
       matrix:
         python-version: [3.5]
     steps:
-      - uses: actions/checkout@v2
       - id: file_changes
         uses: trilom/file-changes-action@v1.2.3
         with:
-          fileOutput: '\n'
           output: 'json'
-      - name: test file changes
-        run: |
-          echo '${{ steps.file_changes.outputs.files_modified }}'
+#      - name: test file changes
+#        run: |
+#          echo '${{ steps.file_changes.outputs.files_modified }}'
+      - uses: actions/checkout@v2
+        if:
+          contains(steps.file_changes.outputs.files_modified, 'VERSION')
       - uses: actions/setup-python@v2
+        if:
+          contains(steps.file_changes.outputs.files_modified, 'VERSION')
         with:
           python-version: ${{ matrix.python-version }}
       - name: Create a source package
